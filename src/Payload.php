@@ -12,28 +12,28 @@
 namespace Manticoresearch\Buddy\Plugin\EmulateElastic;
 
 use Manticoresearch\Buddy\Core\ManticoreSearch\Endpoint;
-use Manticoresearch\Buddy\Core\Network\Request as NetworkRequest;
-use Manticoresearch\Buddy\Core\Plugin\Request as BaseRequest;
+use Manticoresearch\Buddy\Core\Network\Request;
+use Manticoresearch\Buddy\Core\Plugin\BasePayload;
 
 /**
  * Request for Backup command that has parsed parameters from SQL
  */
-final class Request extends BaseRequest {
+final class Payload extends BasePayload {
 
 	/**
-	 * @param NetworkRequest $request
+	 * @param Request $request
 	 * @return static
 	 */
-	public static function fromNetworkRequest(NetworkRequest $request): static {
+	public static function fromRequest(Request $request): static {
 		unset($request);
 		return new static();
 	}
 
 	/**
-	 * @param NetworkRequest $request
+	 * @param Request $request
 	 * @return bool
 	 */
-	public static function hasMatch(NetworkRequest $request): bool {
+	public static function hasMatch(Request $request): bool {
 		return $request->endpointBundle === Endpoint::Elastic;
 	}
 }

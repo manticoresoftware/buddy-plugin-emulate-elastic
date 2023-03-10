@@ -12,7 +12,7 @@
 namespace Manticoresearch\Buddy\Plugin\EmulateElastic;
 
 use Manticoresearch\Buddy\Core\ManticoreSearch\Client as HTTPClient;
-use Manticoresearch\Buddy\Core\Plugin\Executor as BaseExecutor;
+use Manticoresearch\Buddy\Core\Plugin\BaseHandler;
 use Manticoresearch\Buddy\Core\Task\Task;
 use Manticoresearch\Buddy\Core\Task\TaskResult;
 use RuntimeException;
@@ -21,7 +21,7 @@ use parallel\Runtime;
 /**
  * This is the parent class to handle erroneous Manticore queries
  */
-class Executor extends BaseExecutor {
+class Handler extends BaseHandler {
 
 	/** @var HTTPClient $manticoreClient */
 	protected HTTPClient $manticoreClient;
@@ -29,10 +29,10 @@ class Executor extends BaseExecutor {
 	/**
 	 *  Initialize the executor
 	 *
-	 * @param Request $request
+	 * @param Payload $payload
 	 * @return void
 	 */
-	public function __construct(public Request $request) {
+	public function __construct(public Payload $payload) {
 	}
 
 	/**
