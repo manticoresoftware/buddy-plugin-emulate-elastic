@@ -44,21 +44,19 @@ class Handler extends BaseHandler {
 	public function run(Runtime $runtime): Task {
 
 		$taskFn = static function (): TaskResult {
-			return new TaskResult(
-				[
-					'license' => [
-						'status' => 'active',
-						'uid' => 'no_license',
-						'type' => 'basic',
-						'issue_date' => '2023-01-01T00:00:000.000Z',
-						'issue_date_in_millis' => 0,
-						'max_nodes' => 1000,
-						'issued_to' => 'docker-cluster',
-						'issuer' => 'elasticsearch',
-						'start_date_in_millis' => -1,
-					],
-				]
-			);
+			return TaskResult::raw([
+				'license' => [
+					'status' => 'active',
+					'uid' => 'no_license',
+					'type' => 'basic',
+					'issue_date' => '2023-01-01T00:00:000.000Z',
+					'issue_date_in_millis' => 0,
+					'max_nodes' => 1000,
+					'issued_to' => 'docker-cluster',
+					'issuer' => 'elasticsearch',
+					'start_date_in_millis' => -1,
+				],
+			]);
 		};
 
 		return Task::createInRuntime($runtime, $taskFn)->run();
