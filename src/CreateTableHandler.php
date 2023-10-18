@@ -17,7 +17,6 @@ use Manticoresearch\Buddy\Core\Task\Task;
 use Manticoresearch\Buddy\Core\Task\TaskResult;
 use Manticoresearch\Buddy\Core\Tool\Buddy;
 use RuntimeException;
-use parallel\Runtime;
 
 /**
  * This is the parent class to handle erroneous Manticore queries
@@ -39,7 +38,7 @@ class CreateTableHandler extends BaseHandlerWithClient {
 	 * @return Task
 	 * @throws RuntimeException
 	 */
-	public function run(Runtime $runtime): Task {
+	public function run(): Task {
 		$taskFn = static function (Payload $payload, HTTPClient $manticoreClient): TaskResult {
 			$columnExpr = static::buildColumnExpr($payload->columnInfo);
 			$query = "CREATE TABLE IF NOT EXISTS {$payload->table} ($columnExpr)";
@@ -50,8 +49,8 @@ class CreateTableHandler extends BaseHandlerWithClient {
 			return TaskResult::raw($queryResult);
 		};
 
-		return Task::createInRuntime(
-			$runtime, $taskFn, [$this->payload, $this->manticoreClient]
+		return Task::create(
+			$taskFn, [$this->payload, $this->manticoreClient]
 		)->run();
 	}
 

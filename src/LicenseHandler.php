@@ -15,7 +15,6 @@ use Manticoresearch\Buddy\Core\Plugin\BaseHandler;
 use Manticoresearch\Buddy\Core\Task\Task;
 use Manticoresearch\Buddy\Core\Task\TaskResult;
 use RuntimeException;
-use parallel\Runtime;
 
 /**
  * This is the parent class to handle erroneous Manticore queries
@@ -37,7 +36,7 @@ class LicenseHandler extends BaseHandler {
 	 * @return Task
 	 * @throws RuntimeException
 	 */
-	public function run(Runtime $runtime): Task {
+	public function run(): Task {
 
 		$taskFn = static function (): TaskResult {
 			return TaskResult::raw(
@@ -57,7 +56,7 @@ class LicenseHandler extends BaseHandler {
 			);
 		};
 
-		return Task::createInRuntime($runtime, $taskFn)->run();
+		return Task::create($taskFn)->run();
 	}
 
 	/**
