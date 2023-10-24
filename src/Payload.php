@@ -34,6 +34,9 @@ final class Payload extends BasePayload {
 	/** @var ?string $table */
 	public ?string $table;
 
+	/** @var string $path */
+	public string $path;
+
 	/**
 	 * @param Request $request
 	 * @return static
@@ -58,6 +61,7 @@ final class Payload extends BasePayload {
 				}
 				$self->columnInfo = $requestBody['properties'];
 				$self->table = $pathParts[0];
+				$self->path = $request->path;
 				break;
 			default:
 				throw new Exception("Unsupported request type in {$request->path}: " . static::$requestTarget);
